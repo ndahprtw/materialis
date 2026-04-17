@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             SalesSeeder::class,
             ProductSeeder::class,
             InventorySeeder::class,
-            PelangganSeeder::class
+
         ]);
     }
 }

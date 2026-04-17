@@ -24,19 +24,13 @@
     @endif
     
     @if (auth()->user()->role == 'Karyawan' || auth()->user()->role == 'Admin')
-        <!-- Nav -->
-        <li class="nav-item">
-          <a href="{{ url('/data-pelanggan') }}" class="nav-link {{ Request::is('data-pelanggan*') ? '' : 'collapsed' }}">
-            <i class="bi bi-person-heart"></i>
-            <span> Data Pelanggan </span>
-          </a>
-        </li><!-- End Nav -->
+        
     
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/data-sales') }}" class="nav-link {{ Request::is('data-sales*') ? '' : 'collapsed' }}">
             <i class="bi bi-person-lines-fill"></i>
-            <span> Data Sales </span>
+            <span> Data Supplier </span>
           </a>
         </li><!-- End Nav -->
     
@@ -44,7 +38,7 @@
         <li class="nav-item">
           <a href="{{ url('/data-product') }} " class="nav-link {{ Request::is('data-product*') ? '' : 'collapsed' }}">
             <i class="bi bi-bag-fill"></i>
-            <span>Informasi Produk</span>
+            <span>Informasi Material</span>
           </a>
         </li><!-- End Nav -->
     
@@ -56,13 +50,7 @@
           </a>
         </li><!-- End Nav -->
     
-        <!-- Nav -->
-        <li class="nav-item">
-          <a href="{{ url('/pelacakan') }}" class="nav-link {{ Request::is('pelacakan*') ? '' : 'collapsed' }}">
-            <i class="bi bi-geo-alt-fill"></i>
-            <span> Pelacakan </span>
-          </a>
-        </li><!-- End Nav -->
+     
     @endif
 
     @if (auth()->user()->role == 'Kurir')

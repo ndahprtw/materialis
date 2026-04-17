@@ -157,12 +157,12 @@
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Tambah Data Sales</h5>
+                        <h5 class="modal-title">Tambah Data Supplier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="m-1">
-                            <label for="nama" class="form-label">Nama Sales</label>
+                            <label for="nama" class="form-label">Nama Supplier</label>
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror shadow-none" id="nama" value="{{ old('nama') }}">
                             @error('nama') 
                             <div class="invalid-feedback">
@@ -171,7 +171,7 @@
                             @enderror
                         </div>          
                         <div class="m-1">
-                            <label for="alamat" class="form-label">Alamat Sales</label>
+                            <label for="alamat" class="form-label">Alamat Supplier</label>
                             <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror shadow-none" id="alamat" value="{{ old('alamat') }}">
                             @error('alamat') 
                             <div class="invalid-feedback">

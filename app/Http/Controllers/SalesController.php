@@ -11,9 +11,9 @@ class SalesController extends Controller
     public function index()
     {
         $no = 1;
-        $title = 'Data Sales';
-        $data = Sales::orderBy('nama')->get(); 
-        return view('pages.data-sales.index', compact('no', 'data', 'title')); 
+        $title = 'Data Supplier';
+        $data = Sales::orderBy('nama')->get();
+        return view('pages.data-sales.index', compact('no', 'data', 'title'));
     }
 
     public function store(Request $request)
@@ -43,18 +43,19 @@ class SalesController extends Controller
         return redirect()->route('data-sales.index')->with('success', 'Data sales berhasil diperbarui.');
     }
 
-    public function destroy($id) {  
+    public function destroy($id)
+    {
         $data = Sales::find($id);
 
         $cek_produk = Product::where('id_sales', $id)->count();
         if ($cek_produk > 0) {
             return redirect()->back()->with('warning', 'Data ' . $data->nama . ' memiliki ' . $data->produk->count() . ' data produk terkait');
         } else {
-            if ($data->delete()){
+            if ($data->delete()) {
                 return redirect()->back()->with('success', 'Data berhasil dihapus!');
             } else {
                 return redirect()->back()->with('error', 'Gagal menghapus data');
-            } 
-        }  
+            }
+        }
     }
 }

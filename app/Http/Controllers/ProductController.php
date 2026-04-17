@@ -40,7 +40,7 @@ class ProductController extends Controller
             'id_sales' => $request->nama_sales,
         ]);
 
-        return redirect()->route('data-product.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('data-product.index')->with('success', 'Material berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -67,7 +67,7 @@ class ProductController extends Controller
             'id_sales' => $request->nama_sales,
         ]);
 
-        return redirect()->route('data-product.index')->with('success', 'Produk berhasil diperbarui.');
+        return redirect()->route('data-product.index')->with('success', 'Material berhasil diperbarui.');
     }
 
     // Menghapus produk
@@ -79,12 +79,11 @@ class ProductController extends Controller
         if ($cek_inventory > 0 || $cek_pelacakan > 0) {
             return redirect()->back()->with('warning', 'Data ' . $product->nama . ' masih digunakan di fitur lain');
         } else {
-            if ($product->delete()){
+            if ($product->delete()) {
                 return redirect()->back()->with('success', 'Data berhasil dihapus!');
             } else {
                 return redirect()->back()->with('error', 'Gagal menghapus data');
-            } 
-        }  
+            }
+        }
     }
-
 }

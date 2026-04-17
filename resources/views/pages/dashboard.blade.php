@@ -197,48 +197,7 @@
               </div>
             </div>
 
-            <div class="col-lg-6">
-              <div class="card" style="background-color: #F2EED7">
-                <div class="card-body">
-                  <h5 class="card-title">Status Pelacakan</h5>
-
-                  @if ($cek_status != 0)
-                    <!-- Pie Chart -->
-                    <canvas id="pieChart" style="max-height: 400px;"></canvas>
-                    <script>
-                      document.addEventListener("DOMContentLoaded", () => {
-                        // Mengambil data dari server
-                        let status = {!! json_encode($status) !!};
-                        let data = {!! json_encode($data) !!};
-
-                        new Chart(document.querySelector('#pieChart'), {
-                          type: 'pie',
-                          data: {
-                            labels: status,
-                            datasets: [{
-                              label: 'Total',
-                              data: data,
-                              backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 205, 86)'
-                              ],
-                              hoverOffset: 4
-                            }]
-                          }
-                        });
-                      });
-                    </script>
-                    <!-- End Pie CHart -->
-                  @else
-                    <p class="text-center">
-                      Belum ada aktivitas terbaru
-                    </p>
-                  @endif
-    
-                </div>
-              </div>
-            </div>
+            
 
 
           </div>

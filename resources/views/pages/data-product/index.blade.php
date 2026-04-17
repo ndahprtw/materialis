@@ -3,11 +3,11 @@
 @section('content')
 
         <div class="pagetitle">
-            <h1>Produk</h1>
+            <h1>Material</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Produk</li>
+                    <li class="breadcrumb-item active">Material</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -52,10 +52,10 @@
                             <thead>
                                 <tr>
                                     <th> No. </th>
-                                    <th> Nama Product </th>
-                                    <th> Nama Sales </th>
-                                    <th> Harga Product </th>
-                                    <th> Stock Product</th>
+                                    <th> Nama Material </th>
+                                    <th> Nama Supplier </th>
+                                    <th> Harga Material </th>
+                                    <th> Stock Material</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -174,19 +174,19 @@
         </section>
         <!-- /.content -->
     </div>
-{{-- tambah jurusan --}}
+{{-- tambah Material --}}
 <div class="modal fade" id="tambah-product" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form action="{{ route('data-product.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Product</h5>
+                <h5 class="modal-title">Tambah Data Material</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="m-2">
-                    <label for="nama_produk" class="form-label">Nama Product</label>
+                    <label for="nama_produk" class="form-label">Nama Material</label>
                     <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror shadow-none" id="nama_produk" value="{{ old('nama_produk') }}">
                     @error('nama_produk') 
                     <div class="invalid-feedback">
@@ -209,7 +209,7 @@
                     @enderror
                 </div>
                 <div class="m-2">
-                    <label for="harga_produk" class="form-label">Harga Product</label>
+                    <label for="harga_produk" class="form-label">Harga Material</label>
                     <input type="text" name="harga_produk" class="form-control @error('harga_produk') is-invalid @enderror shadow-none" id="harga_produk" value="{{ old('harga_produk') }}">
                     @error('harga_produk') 
                     <div class="invalid-feedback">
@@ -218,7 +218,7 @@
                     @enderror
                 </div>  
                 <div class="m-2">
-                    <label for="stok_produk" class="form-label">Stock Product</label>
+                    <label for="stok_produk" class="form-label">Stock Material</label>
                     <input type="text" name="stok_produk" class="form-control @error('stok_produk') is-invalid @enderror shadow-none" id="stok_produk" value="{{ old('stok_produk') }}">
                     @error('stok_produk') 
                     <div class="invalid-feedback">
