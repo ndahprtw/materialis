@@ -62,7 +62,7 @@
                                         <th> Jenis </th>
                                         <th> Produk </th>
                                         <th> Jumlah </th>
-                                        <th> Pembayaran </th>
+                                        <th> Total Harga </th>
                                         <th> Penanggung Jawab </th>
                                         <th class="w-25"> Pesan </th>
                                     </tr>
@@ -80,31 +80,7 @@
                                         </td>
                                         <td>{{ $item->produk->nama_produk }} </td>
                                         <td>{{ $item->jumlah_barang }}</td>
-                                        <td>
-                                            @if($item->jenis == 'barang masuk')
-                                                <span class="badge rounded-pill bg-danger"><i class="bi bi-dash-circle"></i></span> {{ number_format($item->pembayaran, 0, ',', '.') }}
-                                            @elseif($item->jenis == 'barang keluar')
-                                                <span class="badge rounded-pill bg-success"><i class="bi bi-plus-circle"></i></span> {{ number_format($item->pembayaran, 0, ',', '.') }} <br>
-                                                @if ($item->pelacakan)
-                                                    @if ($item->pelacakan->status == 'dikemas' || $item->pelacakan->status == 'dikirim')
-                                                        sedang {{ $item->pelacakan->status }}
-                                                    @elseif ($item->pelacakan->status == 'dibatalkan')
-                                                        {{ $item->pelacakan->status }}
-                                                    @else
-                                                        @if ($item->pelacakan->jumlah_pelunasan == null)
-                                                            belum dibayar
-                                                        @else
-                                                            Dibayar : {{ number_format($item->pelacakan->jumlah_pelunasan, 0, ',', '.') }} <br>
-                                                            @if ($item->pelacakan->sisa_pelunasan != 0)
-                                                                <span class="badge rounded-pill bg-warning"><i class="bi bi-exclamation-circle"></i></span>{{ number_format($item->pelacakan->sisa_pelunasan, 0, ',', '.') }}
-                                                            @else
-                                                                Status : Lunas
-                                                            @endif
-                                                        @endif
-                                                    @endif
-                                                @endif
-                                            @endif
-                                        </td>
+                                        <td> {{ number_format($item->pembayaran, 0, ',', '.') }} </td>
                                         <td>{{ $item->staff->name }} ( {{ $item->staff->email }} ) </td>
                                         <td class="w-25">
                                             @if($item->pesan == null)

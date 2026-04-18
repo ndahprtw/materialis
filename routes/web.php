@@ -1,13 +1,14 @@
 <?php
 
+use App\Http\Controllers\DetailPermintaanController;
 use App\Http\Controllers\InventoryController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PelacakanController;
-use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StaffController;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,16 +26,20 @@ Route::get('/', function () {
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::group(['middleware' => 'cekrole:Admin,Karyawan,Kurir'], function () {
+Route::group(['middleware' => 'cekrole:Admin,Staff Gudang'], function () {
     Route::get('/ditolak/{id}', [PelacakanController::class, 'update2']);
-});
 
-Route::group(['middleware' => 'cekrole:Admin,Karyawan'], function () {
-    Route::get('/dashboard', [LoginController::class, 'dashboard']);
+    });
+    
+    Route::group(['middleware' => 'cekrole:Admin,Staff Gudang,Staff Proyek, Manager'], function () {
+        Route::get('/dashboard', [LoginController::class, 'dashboard']);
     Route::resource('/data-staff', StaffController::class)->names('data-staff');
     Route::resource('/data-product', ProductController::class)->names('data-product');
     Route::resource('/data-sales', SalesController::class)->names('data-sales');
     Route::resource('/inventory', InventoryController::class)->names('inventory');
+    Route::resource('/permintaan', PermintaanController::class)->names('permintaan');
+    Route::resource('/detail-permintaan', DetailPermintaanController::class)->names('detail-permintaan');
+
     Route::get('/laporan', [InventoryController::class, 'laporan']);
     Route::get('/unduh-laporan/{tahun}/{bulan}', [InventoryController::class, 'unduh_laporan']);
     Route::get('/diantar/{id}', [PelacakanController::class, 'update1']);

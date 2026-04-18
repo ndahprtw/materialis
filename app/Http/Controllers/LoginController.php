@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Inventory;
-use App\Models\Pelacakan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -29,7 +26,7 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
-            if ($user->role === 'admin' || $user->role === 'staff proyek' || $user->role === 'staff gudang' || $user->role === 'manager') {
+            if ($user->role === 'Admin' || $user->role === 'Staff Proyek' || $user->role === 'Staff Gudang' || $user->role === 'Manager') {
                 return redirect('/dashboard');
             } else {
                 return redirect('/')->with('wrong', 'Role tidak Ditemukan !');
@@ -44,7 +41,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
-            if ($user->role === 'admin' || $user->role === 'staff proyek' || $user->role === 'staff gudang' || $user->role === 'manager') {
+            if ($user->role === 'Admin' || $user->role === 'Staff Proyek' || $user->role === 'Staff Gudang' || $user->role === 'Manager') {
                 Auth::logout();
             }
         }
@@ -53,8 +50,10 @@ class LoginController extends Controller
 
     public function dashboard(Request $request)
     {
-        $karyawan = User::where('role', 'Karyawan')->count();
+        $karyawan = User::all()->count();
+        $material = Product::all()->count();
+        $sales = Sales::all()->count();
 
-        return view('pages.dashboard', compact('karyawan'));
+        return view('pages.dashboard', compact('karyawan', 'material', 'sales'));
     }
 }

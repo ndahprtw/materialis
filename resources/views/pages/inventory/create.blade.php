@@ -66,11 +66,12 @@
                                 </div>
                                 <div class="col-md-4 mt-3">
                                     <label for="jenis" class="form-label">Jenis Informasi</label>
-                                    <select name="jenis" id="jenis" class="form-select @error('jenis') is-invalid @enderror">
+                                    {{-- <select name="jenis" id="jenis" class="form-select @error('jenis') is-invalid @enderror">
                                         <option selected disabled>Pilih Jenis Informasi</option>
-                                        <option value="barang masuk" {{ old('jenis') == 'barang masuk' ? 'selected' : '' }}>Barang Masuk</option>
+                                        <option value="barang masuk" {{ old('jenis', 'barang masuk') == 'barang masuk' ? 'selected' : '' }}>Barang Masuk</option>
                                         <option value="barang keluar" {{ old('jenis') == 'barang keluar' ? 'selected' : '' }}>Barang Keluar</option>
-                                    </select>
+                                    </select> --}}
+                                    <input type="text" class="form-control" name="jenis" value="barang masuk" id="jenis" readonly>
                                     @error('jenis') 
                                         <div class="invalid-feedback">
                                             {{ $message }}

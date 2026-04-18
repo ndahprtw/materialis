@@ -3,17 +3,15 @@
 
   <ul class="sidebar-nav" id="sidebar-nav">
 
-    @if (auth()->user()->role == 'Karyawan' || auth()->user()->role == 'Admin')
-      <!-- Dashboard Nav -->
-      <li class="nav-item">
-        <a href="{{ url('/dashboard') }}" class="nav-link {{ Request::is('dashboard') ? '' : 'collapsed' }}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-    @endif
+    <!-- Dashboard Nav -->
+    <li class="nav-item">
+      <a href="{{ url('/dashboard') }}" class="nav-link {{ Request::is('dashboard') ? '' : 'collapsed' }}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
-    @if (auth()->user()->role == 'Admin')
+    @if (auth()->user()->role == 'Admin' || auth()->user()->role == 'Manager')
       <!-- Nav -->
       <li class="nav-item">
         <a href="{{ url('/data-staff') }}" class="nav-link {{ Request::is('data-staff*') ? '' : 'collapsed' }}">
@@ -23,9 +21,7 @@
       </li><!-- End Nav -->
     @endif
     
-    @if (auth()->user()->role == 'Karyawan' || auth()->user()->role == 'Admin')
-        
-    
+    @if (auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Admin')
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/data-sales') }}" class="nav-link {{ Request::is('data-sales*') ? '' : 'collapsed' }}">
@@ -38,7 +34,7 @@
         <li class="nav-item">
           <a href="{{ url('/data-product') }} " class="nav-link {{ Request::is('data-product*') ? '' : 'collapsed' }}">
             <i class="bi bi-bag-fill"></i>
-            <span>Informasi Material</span>
+            <span>Data Material</span>
           </a>
         </li><!-- End Nav -->
     
@@ -53,12 +49,12 @@
      
     @endif
 
-    @if (auth()->user()->role == 'Kurir')
+    @if (auth()->user()->role == 'Staff Proyek' || auth()->user()->role == 'Staff Gudang')
         <!-- Nav -->
         <li class="nav-item">
-          <a href="{{ url('/pelacakan') }}" class="nav-link {{ Request::is('pelacakan*') ? '' : 'collapsed' }}">
+          <a href="{{ url('/permintaan') }}" class="nav-link {{ Request::is('permintaan*') ? '' : 'collapsed' }}">
             <i class="bi bi-geo-alt-fill"></i>
-            <span> Pelacakan </span>
+            <span> Permintaan </span>
           </a>
         </li><!-- End Nav -->
     @endif
