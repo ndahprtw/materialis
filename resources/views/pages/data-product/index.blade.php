@@ -43,9 +43,12 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between m-3">
                         <h5 class="card-title">Total : {{ $data_product->count() }} Data</h5>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-product">
-                            <i class="bi bi-plus-square"></i> Tambah
-                        </button>
+
+                        @if (auth()->user()->role != "Manager")
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-product">
+                                <i class="bi bi-plus-square"></i> Tambah
+                            </button>
+                        @endif
                     </div>
                     <div class="table-responsive">
                         <table class="table">
@@ -56,7 +59,9 @@
                                     <th> Nama Supplier </th>
                                     <th> Harga Material </th>
                                     <th> Stock Material</th>
-                                    <th>Aksi</th>
+                                    @if (auth()->user()->role != "Manager")
+                                        <th>Aksi</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,101 +72,100 @@
                                         <td> {{ $data->sales->nama}} </td>
                                         <td>Rp. {{ number_format($data->harga_produk, 0, ',', '.') }}</td>
                                         <td>{{ $data->stok_produk }}</td>
-                                        <td>
-                                             {{-- edit data --}}
-                                        <button type="button" class="btn btn-primary shadow-none" data-bs-toggle="modal" data-bs-target="#edit{{ $data->id }}"><i class="ri-pencil-fill"></i></button>
-                                        <div class="modal fade" id="edit{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog">
-                                            <form action="{{ route('data-product.update', $data->id) }}" method="post" enctype="multipart/form-data">
-                                              @csrf
-                                              @method('put')
-                                              <div class="modal-content">
-                                              <div class="modal-header">
-                                                  <h5 class="modal-title">Edit Data</h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <div class="m-2">
-                                                    <label for="nama_produk" class="form-label">Nama Product</label>
-                                                    <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror shadow-none" id="nama_produk" value="{{ $data->nama_produk }}">
-                                                    @error('nama_produk') 
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div> 
-                                                    @enderror
-                                                </div>
-                                                <div class="m-2">
-                                                    <label for="nama_sales" class="form-label">Sales</label>
-                                                    <select name="nama_sales" id="nama_sales" class="form-select @error('nama_sales') is-invalid @enderror">
-                                                      <option selected disabled>Pilih Informasi Sales</option>
-                                                      @foreach ($sales as $item)
-                                                        <option value="{{ $item->id }}" {{ $data->id_sales == $item->id ? 'selected' : '' }}> {{ $item->nama }} </option>  
-                                                      @endforeach
-                                                    </select>
-                                                    @error('nama_sales') 
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div> 
-                                                    @enderror
-                                                </div>
-                                                <div class="m-2">
-                                                    <label for="harga_produk" class="form-label">Harga Product</label>
-                                                    <input type="text" name="harga_produk" class="form-control @error('harga_produk') is-invalid @enderror shadow-none" id="harga_produk" value="{{ $data->harga_produk }}">
-                                                    @error('harga_produk') 
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div> 
-                                                    @enderror
-                                                </div>
-                                                <div class="m-2">
-                                                    <label for="stok_produk" class="form-label">Stok Product</label>
-                                                    <input type="text" name="stok_produk" class="form-control @error('stok_produk') is-invalid @enderror shadow-none" id="stok_produk" value="{{ $data->stok_produk }}">
-                                                    @error('stok_produk') 
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div> 
-                                                    @enderror
-                                                </div>
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Kembali</button>
-                                                  <button type="submit" class="btn btn-primary text-white shadow-none">Kirim</button>
-                                              </div>
-                                              </div>
-                                          </form>
-                                          </div>
-                                        </div>
-                                        <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#hapus-jurusan{{ $data->id }}"><i class="bi bi-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <div class="d-flex gap-2">
-
-                                      
-
-                                        {{-- hapus data --}}
-                                        
-                                        <div class="modal fade" id="hapus-jurusan{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                              <div class="modal-content">
-                                                  <div class="modal-header">
-                                                    <h5 class="modal-title"> Hapus Informasi Produk </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                  </div>
-                                                    <div class="modal-body text-center">
-                                                        <p style="color: black">Apakah anda yakin untuk menghapus produk {{ $data->nama_produk }}?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
-                                                        <form action="{{ route('data-product.destroy', $data->id) }}" method="POST" style="display: inline;">
-                                                            @method('delete')
+                                        @if (auth()->user()->role != "Manager")
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    {{-- edit data --}}
+                                                    <button type="button" class="btn btn-primary shadow-none" data-bs-toggle="modal" data-bs-target="#edit{{ $data->id }}"><i class="ri-pencil-fill"></i></button>
+                                                    <div class="modal fade" id="edit{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <form action="{{ route('data-product.update', $data->id) }}" method="post" enctype="multipart/form-data">
                                                             @csrf
-                                                            <input type="submit" value="Hapus" class="btn btn-danger shadow-none">
-                                                        </form> 
+                                                            @method('put')
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit Data</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <div class="m-2">
+                                                                <label for="nama_produk" class="form-label">Nama Product</label>
+                                                                <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror shadow-none" id="nama_produk" value="{{ $data->nama_produk }}">
+                                                                @error('nama_produk') 
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div> 
+                                                                @enderror
+                                                            </div>
+                                                            <div class="m-2">
+                                                                <label for="nama_sales" class="form-label">Sales</label>
+                                                                <select name="nama_sales" id="nama_sales" class="form-select @error('nama_sales') is-invalid @enderror">
+                                                                    <option selected disabled>Pilih Informasi Sales</option>
+                                                                    @foreach ($sales as $item)
+                                                                    <option value="{{ $item->id }}" {{ $data->id_sales == $item->id ? 'selected' : '' }}> {{ $item->nama }} </option>  
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('nama_sales') 
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div> 
+                                                                @enderror
+                                                            </div>
+                                                            <div class="m-2">
+                                                                <label for="harga_produk" class="form-label">Harga Product</label>
+                                                                <input type="text" name="harga_produk" class="form-control @error('harga_produk') is-invalid @enderror shadow-none" id="harga_produk" value="{{ $data->harga_produk }}">
+                                                                @error('harga_produk') 
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div> 
+                                                                @enderror
+                                                            </div>
+                                                            <div class="m-2">
+                                                                <label for="stok_produk" class="form-label">Stok Product</label>
+                                                                <input type="text" name="stok_produk" class="form-control @error('stok_produk') is-invalid @enderror shadow-none" id="stok_produk" value="{{ $data->stok_produk }}">
+                                                                @error('stok_produk') 
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div> 
+                                                                @enderror
+                                                            </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Kembali</button>
+                                                                <button type="submit" class="btn btn-primary text-white shadow-none">Kirim</button>
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#hapus-jurusan{{ $data->id }}"><i class="bi bi-trash"></i></button>
+
+                                                    {{-- hapus data --}}
+                                                    <div class="modal fade" id="hapus-jurusan{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"> Hapus Informasi Produk </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                                <div class="modal-body text-center">
+                                                                    <p style="color: black">Apakah anda yakin untuk menghapus produk {{ $data->nama_produk }}?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
+                                                                    <form action="{{ route('data-product.destroy', $data->id) }}" method="POST" style="display: inline;">
+                                                                        @method('delete')
+                                                                        @csrf
+                                                                        <input type="submit" value="Hapus" class="btn btn-danger shadow-none">
+                                                                    </form> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                      </div>
+                                            </td>
+                                        @endif
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

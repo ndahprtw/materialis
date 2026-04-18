@@ -159,7 +159,7 @@
                                                     @if ($item->status == 'diproses')
                                                         <span class="badge bg-primary"> {{ $item->status }} </span>
                                                     @elseif ($item->status == 'selesai')
-                                                        <span class="badge bg-success"> {{ $item->status }} </span>
+                                                        <a href="{{ route('permintaan.show', $item->id) }}" class="btn btn-success"><i class="bi bi-eye"></i></a>
                                                     @endif
                                                 </p>
                                                 @endif

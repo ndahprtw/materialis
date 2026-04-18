@@ -35,9 +35,11 @@
                     <div class="card-body pt-3">
                         <form action="{{ route('inventory.index') }}" method="GET" id="filterForm">
                             <div class="row text-center mb-3">
-                                <div class="col-md-1 my-1">
-                                    <a href="{{ route('inventory.create') }}" class="btn btn-primary"><i class="bi bi-plus"></i> </a>
-                                </div>
+                                @if (auth()->user()->role == 'Staff Gudang')
+                                    <div class="col-md-1 my-1">
+                                        <a href="{{ route('inventory.create') }}" class="btn btn-primary"><i class="bi bi-plus"></i> </a>
+                                    </div>
+                                @endif
                                 <div class="col-md-5 my-1">
                                     <input type="date" name="tanggal" id="tanggal" class="form-control" onchange="document.getElementById('filterForm').submit();" value="{{ request('tanggal') }}"> 
                                 </div>

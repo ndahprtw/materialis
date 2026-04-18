@@ -40,9 +40,11 @@
                     <div class="card-body pt-3">
                         <div class="d-flex align-items-center justify-content-between m-3">
                             <h5 class="card-title">Total : {{ $data->count() }} Data</h5>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-data">
-                                <i class="bi bi-plus-square"></i> Data Baru
-                            </button>
+                            @if (auth()->user()->role != "Manager")
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-data">
+                                    <i class="bi bi-plus-square"></i> Data Baru
+                                </button>
+                            @endif
                         </div>
 
                         <div class="table-responsive">
@@ -53,7 +55,9 @@
                                         <th>Nama</th>
                                         <th class="w-50">Alamat</th>
                                         <th>WhatsApp</th>
-                                        <th>Aksi</th>
+                                        @if (auth()->user()->role != "Manager")
+                                            <th>Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,6 +69,7 @@
                                         <td>
                                             <a href="https://wa.me/{{ $item->telepon }}" target="_blank"> <i class="bi bi-telephone-fill"></i> {{ $item->telepon }} </a>
                                         </td>
+                                        @if (auth()->user()->role != "Manager")
                                         <td>
                                             {{-- edit data --}}
                                             <button type="button" class="btn btn-primary shadow-none" data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}"><i class="ri-pencil-fill"></i></button>
@@ -140,6 +145,7 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>

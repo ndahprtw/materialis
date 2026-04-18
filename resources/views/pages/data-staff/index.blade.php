@@ -34,9 +34,11 @@
                     <div class="card-body pt-3">
                         <div class="d-flex align-items-center justify-content-between m-3">
                             <h5 class="card-title">Total : {{ $user}} Karyawan</h5>
-                            <a href="{{ route('data-staff.create') }}" class="btn btn-primary">
-                                <i class="bi bi-plus"></i> Data Baru
-                            </a>
+                            @if (auth()->user()->role == "Admin")
+                                <a href="{{ route('data-staff.create') }}" class="btn btn-primary">
+                                    <i class="bi bi-plus"></i> Data Baru
+                                </a>
+                            @endif
                         </div>
 
                         <div class="table-responsive">
@@ -48,7 +50,11 @@
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Profile</th>
-                                        <th>Aksi</th>
+                                        @if (auth()->user()->role == "Admin")    
+                                            <th>
+                                                Aksi
+                                            </th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,18 +82,20 @@
                                                 <img src="{{ asset('assets/img/profile/profile.jpg') }}" alt="Profile" class="img-fluid">
                                             @endif
                                         </td>
-                                        <td>
-                                            <a href="{{ route('data-staff.edit', $data->id) }}" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </a>
-                                            <form action="{{ route('data-staff.destroy', $data->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                        @if (auth()->user()->role == "Admin")
+                                            <td>
+                                                <a href="{{ route('data-staff.edit', $data->id) }}" class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </a>
+                                                <form action="{{ route('data-staff.destroy', $data->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>

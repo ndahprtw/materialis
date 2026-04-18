@@ -216,29 +216,38 @@
                                             </td>
                                         @else
                                             <td>
-                                                {{-- hapus data --}}
-                                                <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#hapus-data{{ $item->id }}"><i class="bi bi-trash"></i></button>
-                                                <div class="modal fade" id="hapus-data{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"> Hapus Data </h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                            <div class="modal-body text-center">
-                                                                <p style="color: black">Apakah anda yakin untuk menghapus material <b>{{ $item->produk->nama_produk }}</b> dari daftar permintaan ?</p>
+                                                @if ($item->status != null)
+                                                    @if ($item->status == 'stok tersedia')
+                                                        <span class="badge bg-success"> {{ $item->status }} </span>
+                                                    @else
+                                                        <span class="badge bg-danger"> {{ $item->status }} </span>   
+                                                    @endif <br>
+                                                    <b>note</b> : {{ $item->pesan ?? '-' }}
+                                                @else
+                                                    {{-- hapus data --}}
+                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#hapus-data{{ $item->id }}"><i class="bi bi-trash"></i></button>
+                                                    <div class="modal fade" id="hapus-data{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"> Hapus Data </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
-                                                                <form action="{{ route('detail-permintaan.destroy', $item->id) }}" method="POST" style="display: inline;">
-                                                                    @method('delete')
-                                                                    @csrf
-                                                                    <input type="submit" value="Hapus" class="btn btn-danger shadow-none">
-                                                                </form> 
+                                                                <div class="modal-body text-center">
+                                                                    <p style="color: black">Apakah anda yakin untuk menghapus material <b>{{ $item->produk->nama_produk }}</b> dari daftar permintaan ?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
+                                                                    <form action="{{ route('detail-permintaan.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                                        @method('delete')
+                                                                        @csrf
+                                                                        <input type="submit" value="Hapus" class="btn btn-danger shadow-none">
+                                                                    </form> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endif
                                             </td>
                                         @endif
                                     </tr>

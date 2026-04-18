@@ -25,15 +25,9 @@ Route::get('/', function () {
 });
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
-
-Route::group(['middleware' => 'cekrole:Admin,Staff Gudang'], function () {
-    Route::get('/ditolak/{id}', [PelacakanController::class, 'update2']);
-
-    });
     
-    Route::group(['middleware' => 'cekrole:Admin,Staff Gudang,Staff Proyek, Manager'], function () {
-        Route::get('/dashboard', [LoginController::class, 'dashboard']);
-    Route::resource('/data-staff', StaffController::class)->names('data-staff');
+Route::group(['middleware' => 'cekrole:Admin,Staff Gudang,Staff Proyek,Manager'], function () {
+    Route::get('/dashboard', [LoginController::class, 'dashboard']);
     Route::resource('/data-product', ProductController::class)->names('data-product');
     Route::resource('/data-sales', SalesController::class)->names('data-sales');
     Route::resource('/inventory', InventoryController::class)->names('inventory');
@@ -42,8 +36,7 @@ Route::group(['middleware' => 'cekrole:Admin,Staff Gudang'], function () {
 
     Route::get('/laporan', [InventoryController::class, 'laporan']);
     Route::get('/unduh-laporan/{tahun}/{bulan}', [InventoryController::class, 'unduh_laporan']);
-    Route::get('/diantar/{id}', [PelacakanController::class, 'update1']);
 });
-Route::group(['middleware' => 'cekrole:Admin'], function () {
+Route::group(['middleware' => 'cekrole:Admin,Manager'], function () {
     Route::resource('/data-staff', StaffController::class)->names('data-staff');
 });

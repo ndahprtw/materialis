@@ -21,7 +21,7 @@
       </li><!-- End Nav -->
     @endif
     
-    @if (auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Admin')
+    @if (auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Manager')
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/data-sales') }}" class="nav-link {{ Request::is('data-sales*') ? '' : 'collapsed' }}">
@@ -36,8 +36,12 @@
             <i class="bi bi-bag-fill"></i>
             <span>Data Material</span>
           </a>
-        </li><!-- End Nav -->
-    
+        </li><!-- End Nav -->    
+     
+    @endif
+
+    @if (auth()->user()->role == 'Staff Proyek' || auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Manager')
+
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/inventory') }}" class="nav-link {{ Request::is('inventory*') || Request::is('laporan') ? '' : 'collapsed' }}">
@@ -45,11 +49,11 @@
             <span> Inventory </span>
           </a>
         </li><!-- End Nav -->
-    
-     
+
     @endif
 
     @if (auth()->user()->role == 'Staff Proyek' || auth()->user()->role == 'Staff Gudang')
+
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/permintaan') }}" class="nav-link {{ Request::is('permintaan*') ? '' : 'collapsed' }}">

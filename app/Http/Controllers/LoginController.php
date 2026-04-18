@@ -23,6 +23,7 @@ class LoginController extends Controller
         // ]);
 
 
+        // dd($request->password);
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
