@@ -33,8 +33,10 @@
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control" required>
                                     <option value="" disabled selected>Pilih role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="karyawan">Karyawan</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Staff Gudang">Staff Gudang</option>
+                                    <option value="Staff Proyek">Staff Proyek</option>
                                 </select>
                             </div>
 

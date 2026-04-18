@@ -14,17 +14,12 @@
 
         <li class="nav-item dropdown pe-3">
 
-          {{-- <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            @if (auth()->user()->jenis_kelamin == 'L')
-              <img src="{{ asset('assets/img/profile laki.jpg') }}" alt="Profile" class="rounded-circle">
-            @else
-              <img src="{{ asset('assets/img/profile perempuan.jpg') }}" alt="Profile" class="rounded-circle">
-            @endif
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->nama }}</span>
-          </a><!-- End Profile Iamge Icon --> --}}
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ asset('assets/img/profile.jpg') }}" alt="Profile" class="rounded-circle">
+            @if (auth()->user()->profile != null)
+                <img src="{{ asset('assets/img/profile/'.auth()->user()->profile) }}" alt="{{ auth()->user()->profile }}" class="rounded-circle">
+            @else
+                <img src="{{ asset('assets/img/profile/profile.jpg') }}" alt="Profile" class="rounded-circle">
+            @endif
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -37,7 +32,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
+            {{-- <li>
               <a class="dropdown-item d-flex align-items-center" href="/">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
@@ -45,12 +40,12 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> --}}
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="/logout">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span>Logout</span>
               </a>
             </li>
 

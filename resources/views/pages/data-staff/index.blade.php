@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-body pt-3">
                         <div class="d-flex align-items-center justify-content-between m-3">
-                            <h5 class="card-title">Total : {{ $karyawan }} Karyawan | {{ $admin }} Admin</h5>
+                            <h5 class="card-title">Total : {{ $user}} Karyawan</h5>
                             <a href="{{ route('data-staff.create') }}" class="btn btn-primary">
                                 <i class="bi bi-plus"></i> Data Baru
                             </a>
@@ -57,8 +57,25 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->email }}</td>
-                                        <td>{{ $data->role }}</td>
-                                        <td>{{ $data->profile }}</td>
+                                        <td>
+                                            @if ($data->role == "Manager")
+                                                <span class="badge bg-secondary">{{ $data->role }}</span>
+                                            @elseif ($data->role == "Admin")
+                                                <span class="badge bg-warning">{{ $data->role }}</span>
+                                            @elseif ($data->role == "Staff Gudang")
+                                                <span class="badge bg-primary">{{ $data->role }}</span>
+                                            @elseif ($data->role == "Staff Proyek")
+                                                <span class="badge bg-info">{{ $data->role }}</span>
+                                                
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($data->profile != null)
+                                                <img src="{{ asset('assets/img/profile/'.$data->profile) }}" alt="{{ $data->profile }}" style="width: 75px">
+                                            @else
+                                                <img src="{{ asset('assets/img/profile/profile.jpg') }}" alt="Profile" class="img-fluid">
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('data-staff.edit', $data->id) }}" class="btn btn-primary btn-sm">
                                                 <i class="bi bi-pencil-fill"></i>
