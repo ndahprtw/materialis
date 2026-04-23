@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
-    
+
 Route::group(['middleware' => 'cekrole:Admin,Staff Gudang,Staff Proyek,Manager'], function () {
     Route::get('/dashboard', [LoginController::class, 'dashboard']);
     Route::resource('/data-product', ProductController::class)->names('data-product');

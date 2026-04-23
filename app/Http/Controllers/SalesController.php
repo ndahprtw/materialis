@@ -43,19 +43,15 @@ class SalesController extends Controller
         return redirect()->route('data-sales.index')->with('success', 'Data sales berhasil diperbarui.');
     }
 
+
+
     public function destroy($id)
     {
-        $data = Sales::find($id);
+        $data = Sales::findOrFail($id);
+        $data->delete();
 
-        $cek_produk = Product::where('id_sales', $id)->count();
-        if ($cek_produk > 0) {
-            return redirect()->back()->with('warning', 'Data ' . $data->nama . ' memiliki ' . $data->produk->count() . ' data produk terkait');
-        } else {
-            if ($data->delete()) {
-                return redirect()->back()->with('success', 'Data berhasil dihapus!');
-            } else {
-                return redirect()->back()->with('error', 'Gagal menghapus data');
-            }
-        }
+        return redirect()
+            ->route('data-sales.index')
+            ->with('success', 'Data pegawai berhasil dihapus!');
     }
 }

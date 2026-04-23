@@ -71,19 +71,29 @@ class ProductController extends Controller
     }
 
     // Menghapus produk
+    // public function destroy($id)
+    // {
+    //     $product = Product::findOrFail($id);
+    //     $cek_inventory = Inventory::where('id_produk', $id)->count();
+    //     $cek_pelacakan = Pelacakan::where('id_produk', $id)->count();
+    //     if ($cek_inventory > 0 || $cek_pelacakan > 0) {
+    //         return redirect()->back()->with('warning', 'Data ' . $product->nama . ' masih digunakan di fitur lain');
+    //     } else {
+    //         if ($product->delete()) {
+    //             return redirect()->back()->with('success', 'Data berhasil dihapus!');
+    //         } else {
+    //             return redirect()->back()->with('error', 'Gagal menghapus data');
+    //         }
+    //     }
+    // }
+
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $cek_inventory = Inventory::where('id_produk', $id)->count();
-        $cek_pelacakan = Pelacakan::where('id_produk', $id)->count();
-        if ($cek_inventory > 0 || $cek_pelacakan > 0) {
-            return redirect()->back()->with('warning', 'Data ' . $product->nama . ' masih digunakan di fitur lain');
-        } else {
-            if ($product->delete()) {
-                return redirect()->back()->with('success', 'Data berhasil dihapus!');
-            } else {
-                return redirect()->back()->with('error', 'Gagal menghapus data');
-            }
-        }
+        $data = Product::findOrFail($id);
+        $data->delete();
+
+        return redirect()
+            ->route('data-product.index')
+            ->with('success', 'Data pegawai berhasil dihapus!');
     }
 }
