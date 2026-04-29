@@ -199,9 +199,9 @@
                     @enderror
                 </div>
                 <div class="m-2">
-                    <label for="nama_sales" class="form-label">Sales</label>
+                    <label for="nama_sales" class="form-label">Supplier</label>
                     <select name="nama_sales" id="nama_sales" class="form-select @error('nama_sales') is-invalid @enderror">
-                      <option selected disabled>Pilih Informasi Sales</option>
+                      <option selected disabled>Pilih Informasi Supplier</option>
                       @foreach ($sales as $item)
                         <option value="{{ $item->id }}" {{ old('nama_sales') == $item->id ? 'selected' : '' }}> {{ $item->nama }} </option>  
                       @endforeach

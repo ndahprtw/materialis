@@ -15,24 +15,31 @@ class InventoryController extends Controller
     {
         $no = 1;
         $title = 'Inventory';
+        $produk = Product::all();
 
-        // Inisialisasi query Inventory
         $query = Inventory::query();
 
-        // Filter berdasarkan tanggal jika ada
-        if ($request->has('tanggal') && $request->tanggal) {
-            $query->whereDate('created_at', $request->tanggal);
+        // ✅ Filter range tanggal
+        if ($request->tanggal_dari && $request->tanggal_sampai) {
+            $query->whereBetween('created_at', [
+                $request->tanggal_dari . ' 00:00:00',
+                $request->tanggal_sampai . ' 23:59:59'
+            ]);
         }
 
-        // Filter berdasarkan jenis (barang masuk/keluar) jika ada
-        if ($request->has('jenis') && $request->jenis) {
+        // Filter jenis
+        if ($request->jenis) {
             $query->where('jenis', $request->jenis);
         }
 
-        // Ambil data sesuai filter
+        // Filter produk
+        if ($request->produk) {
+            $query->where('id_produk', $request->produk);
+        }
+
         $data = $query->get();
 
-        return view('pages.inventory.index', compact('no', 'title', 'data'));
+        return view('pages.inventory.index', compact('no', 'title', 'data', 'produk'));
     }
 
     public function create()
@@ -42,7 +49,8 @@ class InventoryController extends Controller
         return view('pages.inventory.create', compact('title', 'produk'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // dd($request);    
         $request->validate([
             'produk' => 'required',
@@ -98,10 +106,9 @@ class InventoryController extends Controller
     public function unduh_laporan($tahun, $bulan)
     {
         $data = Inventory::whereYear('created_at', $tahun)
-                         ->whereMonth('created_at', $bulan)
-                         ->get();
-    
+            ->whereMonth('created_at', $bulan)
+            ->get();
+
         return view('pages.inventory.download', compact('data', 'tahun', 'bulan'));
     }
-    
 }

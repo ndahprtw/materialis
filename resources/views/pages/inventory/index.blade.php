@@ -33,28 +33,80 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body pt-3">
-                        <form action="{{ route('inventory.index') }}" method="GET" id="filterForm">
-                            <div class="row text-center mb-3">
-                                @if (auth()->user()->role == 'Staff Gudang')
-                                    <div class="col-md-1 my-1">
-                                        <a href="{{ route('inventory.create') }}" class="btn btn-primary"><i class="bi bi-plus"></i> </a>
-                                    </div>
-                                @endif
-                                <div class="col-md-5 my-1">
-                                    <input type="date" name="tanggal" id="tanggal" class="form-control" onchange="document.getElementById('filterForm').submit();" value="{{ request('tanggal') }}"> 
-                                </div>
-                                <div class="col-md-5 my-1">
-                                    <select onchange="document.getElementById('filterForm').submit();" name="jenis" id="jenis" class="form-control">
-                                        <option value="" selected disabled>Filter Jenis Informasi</option>
-                                        <option value="barang masuk">Barang Masuk</option>
-                                        <option value="barang keluar">Barang Keluar</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-1 my-1">
-                                    <a href="/laporan" class="btn btn-warning"><i class="bi bi-download"></i> </a>
-                                </div>
-                            </div>
-                        </form>
+                       <form action="{{ route('inventory.index') }}" method="GET" id="filterForm">
+    <div class="row align-items-center g-2 mb-3">
+
+        {{-- Tombol tambah --}}
+        @if (auth()->user()->role == 'Staff Gudang')
+        <div class="col-auto">
+            <a href="{{ route('inventory.create') }}" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus me-1"></i> Tambah Material
+            </a>
+        </div>
+        @endif
+
+        {{-- Tanggal dari --}}
+        <div class="col-md-2">
+            <input type="date" name="tanggal_dari"
+                class="form-control form-control-sm"
+                value="{{ request('tanggal_dari') }}"
+                onchange="document.getElementById('filterForm').submit();">
+        </div>
+
+        {{-- Tanggal sampai --}}
+        <div class="col-md-2">
+            <input type="date" name="tanggal_sampai"
+                class="form-control form-control-sm"
+                value="{{ request('tanggal_sampai') }}"
+                onchange="document.getElementById('filterForm').submit();">
+        </div>
+
+        {{-- Jenis --}}
+        <div class="col-md-2">
+            <select name="jenis"
+                class="form-control form-control-sm"
+                onchange="document.getElementById('filterForm').submit();">
+                <option value="">Semua Jenis</option>
+                <option value="barang masuk" {{ request('jenis') == 'barang masuk' ? 'selected' : '' }}>
+                    Barang Masuk
+                </option>
+                <option value="barang keluar" {{ request('jenis') == 'barang keluar' ? 'selected' : '' }}>
+                    Barang Keluar
+                </option>
+            </select>
+        </div>
+
+        {{-- Produk --}}
+        <div class="col-md-3">
+            <select name="produk"
+                class="form-control form-control-sm"
+                onchange="document.getElementById('filterForm').submit();">
+                <option value="">Semua Material</option>
+                @foreach($produk as $product)
+                    <option value="{{ $product->id }}"
+                        {{ request('produk') == $product->id ? 'selected' : '' }}>
+                        {{ $product->nama_produk }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- Tombol export --}}
+        <div class="col-auto">
+            <a href="/laporan" class="btn btn-warning btn-sm">
+                <i class="bi bi-download"></i>
+            </a>
+        </div>
+
+        {{-- Tombol reset --}}
+        <div class="col-auto">
+            <a href="{{ route('inventory.index') }}" class="btn btn-secondary btn-sm">
+                Reset
+            </a>
+        </div>
+
+    </div>
+</form>
 
                         <div class="table-responsive">
                             <table class="table">
@@ -62,7 +114,7 @@
                                     <tr>
                                         <th> Tanggal </th>
                                         <th> Jenis </th>
-                                        <th> Produk </th>
+                                        <th> Material </th>
                                         <th> Jumlah </th>
                                         <th> Total Harga </th>
                                         <th> Penanggung Jawab </th>

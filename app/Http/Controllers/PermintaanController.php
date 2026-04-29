@@ -13,13 +13,13 @@ class PermintaanController extends Controller
     public function index()
     {
         $no = 1;
-        $title = 'Permintaan Materian';
+        $title = 'Permintaan Material';
         if (auth()->user()->role == 'Staff Proyek') {
             $data = Permintaan::where('id_staff_gudang', auth()->user()->id)->orderBy('tanggal_permintaan', 'desc')->get();
         } else {
             $data = Permintaan::where('status', "!=", 'dalam pengajuan')->get();
         }
-        
+
         return view('pages.permintaan.index', compact('no', 'title', 'data'));
     }
 
@@ -62,7 +62,6 @@ class PermintaanController extends Controller
 
             return redirect()->back()->with('success', 'Permintaan pengajuan material selesai diproses.');
         }
-
     }
 
     public function show($id)
@@ -79,7 +78,7 @@ class PermintaanController extends Controller
     {
         $data = Permintaan::findOrFail($id);
         $detail_data = DetailPermintaan::where('id_permintaan', $id)->get();
-        
+
         if ($data->delete()) {
             foreach ($detail_data as $detail) {
                 $detail->delete();
@@ -89,5 +88,4 @@ class PermintaanController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus data');
         }
     }
-
 }

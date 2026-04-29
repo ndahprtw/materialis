@@ -31,9 +31,9 @@
                             @csrf
                             <div class="row">
                                 <div>
-                                    <label for="produk" class="form-label">Produk</label>
+                                    <label for="produk" class="form-label">Material</label>
                                     <select name="produk" id="produk" class="form-select @error('produk') is-invalid @enderror">
-                                        <option selected disabled>Pilih Informasi Produk</option>
+                                        <option selected disabled>Pilih Informasi Material</option>
                                         @foreach ($produk as $item)
                                             <option value="{{ $item->id }}" {{ old('produk') == $item->id ? 'selected' : '' }} data-harga="{{ $item->harga_produk }}">
                                                 {{ $item->nama_produk }} | Stok : {{ $item->stok_produk }} | Harga : {{ number_format($item->harga_produk, 2) }} 
