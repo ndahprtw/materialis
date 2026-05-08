@@ -111,4 +111,32 @@ class InventoryController extends Controller
 
         return view('pages.inventory.download', compact('data', 'tahun', 'bulan'));
     }
+
+    public function download(Request $request)
+    {
+        $data = Inventory::query();
+
+        // filter tanggal
+        if ($request->tanggal_dari) {
+            $data->whereDate('tanggal', '>=', $request->tanggal_dari);
+        }
+
+        if ($request->tanggal_sampai) {
+            $data->whereDate('tanggal', '<=', $request->tanggal_sampai);
+        }
+
+        // filter jenis
+        if ($request->jenis) {
+            $data->where('jenis', $request->jenis);
+        }
+
+        // filter produk
+        if ($request->produk) {
+            $data->where('id_produk', $request->produk);
+        }
+
+        $data = $data->get();
+
+        return view('pages.inventory.filter-download', compact('data'));
+    }
 }

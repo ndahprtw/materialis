@@ -33,80 +33,84 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body pt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            {{-- Tombol tambah --}}
+                            @if (auth()->user()->role == 'Staff Gudang')
+                                <div>
+                                    <a href="{{ route('inventory.create') }}" class="btn btn-primary">
+                                        <i class="bi bi-plus me-1"></i> Tambah Material
+                                    </a>
+                                </div>
+                            @endif
+                            <div>
+                                <a href="/laporan" class="btn btn-danger">
+                                    <i class="bi bi-file-pdf"></i> Rekap Bulanan
+                                </a>
+                            </div>
+                        </div>
                        <form action="{{ route('inventory.index') }}" method="GET" id="filterForm">
-    <div class="row align-items-center g-2 mb-3">
+                            <div class="row align-items-center g-2 mb-3">
 
-        {{-- Tombol tambah --}}
-        @if (auth()->user()->role == 'Staff Gudang')
-        <div class="col-auto">
-            <a href="{{ route('inventory.create') }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus me-1"></i> Tambah Material
-            </a>
-        </div>
-        @endif
+                                <div class="col-md-1">
+                                    Filter Data
+                                </div>
 
-        {{-- Tanggal dari --}}
-        <div class="col-md-2">
-            <input type="date" name="tanggal_dari"
-                class="form-control form-control-sm"
-                value="{{ request('tanggal_dari') }}"
-                onchange="document.getElementById('filterForm').submit();">
-        </div>
+                                {{-- Tanggal dari --}}
+                                <div class="col-md-2">
+                                    <input type="date" name="tanggal_dari" id="tanggal_dari" class="form-control form-control-sm" value="{{ request('tanggal_dari') }}" onchange="     document.getElementById('tanggal_sampai').min = this.value;     document.getElementById('filterForm').submit(); ">
+                                </div>
 
-        {{-- Tanggal sampai --}}
-        <div class="col-md-2">
-            <input type="date" name="tanggal_sampai"
-                class="form-control form-control-sm"
-                value="{{ request('tanggal_sampai') }}"
-                onchange="document.getElementById('filterForm').submit();">
-        </div>
+                                {{-- Tanggal sampai --}}
+                                <div class="col-md-2">
+                                    <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control form-control-sm" min="{{ request('tanggal_dari') }}" value="{{ request('tanggal_sampai') }}" onchange="document.getElementById('filterForm').submit();">
+                                </div>
 
-        {{-- Jenis --}}
-        <div class="col-md-2">
-            <select name="jenis"
-                class="form-control form-control-sm"
-                onchange="document.getElementById('filterForm').submit();">
-                <option value="">Semua Jenis</option>
-                <option value="barang masuk" {{ request('jenis') == 'barang masuk' ? 'selected' : '' }}>
-                    Barang Masuk
-                </option>
-                <option value="barang keluar" {{ request('jenis') == 'barang keluar' ? 'selected' : '' }}>
-                    Barang Keluar
-                </option>
-            </select>
-        </div>
+                                {{-- Jenis --}}
+                                <div class="col-md-3">
+                                    <select name="jenis"
+                                        class="form-control form-control-sm"
+                                        onchange="document.getElementById('filterForm').submit();">
+                                        <option value="">Semua Jenis</option>
+                                        <option value="barang masuk" {{ request('jenis') == 'barang masuk' ? 'selected' : '' }}>
+                                            Barang Masuk
+                                        </option>
+                                        <option value="barang keluar" {{ request('jenis') == 'barang keluar' ? 'selected' : '' }}>
+                                            Barang Keluar
+                                        </option>
+                                    </select>
+                                </div>
 
-        {{-- Produk --}}
-        <div class="col-md-3">
-            <select name="produk"
-                class="form-control form-control-sm"
-                onchange="document.getElementById('filterForm').submit();">
-                <option value="">Semua Material</option>
-                @foreach($produk as $product)
-                    <option value="{{ $product->id }}"
-                        {{ request('produk') == $product->id ? 'selected' : '' }}>
-                        {{ $product->nama_produk }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+                                {{-- Produk --}}
+                                <div class="col-md-3">
+                                    <select name="produk"
+                                        class="form-control form-control-sm"
+                                        onchange="document.getElementById('filterForm').submit();">
+                                        <option value="">Semua Material</option>
+                                        @foreach($produk as $product)
+                                            <option value="{{ $product->id }}"
+                                                {{ request('produk') == $product->id ? 'selected' : '' }}>
+                                                {{ $product->nama_produk }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-        {{-- Tombol export --}}
-        <div class="col-auto">
-            <a href="/laporan" class="btn btn-warning btn-sm">
-                <i class="bi bi-download"></i>
-            </a>
-        </div>
+                                {{-- Tombol export --}}
+                                <div class="col-auto">
+                                    <a href="{{ route('inventory.download', request()->query()) }}" target="_blank"  class="btn btn-warning btn-sm">
+                                        <i class="bi bi-download"></i>
+                                    </a>
+                                </div>
 
-        {{-- Tombol reset --}}
-        <div class="col-auto">
-            <a href="{{ route('inventory.index') }}" class="btn btn-secondary btn-sm">
-                Reset
-            </a>
-        </div>
+                                {{-- Tombol reset --}}
+                                <div class="col-auto">
+                                    <a href="{{ route('inventory.index') }}" class="btn btn-secondary btn-sm">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </a>
+                                </div>
 
-    </div>
-</form>
+                            </div>
+                        </form>
 
                         <div class="table-responsive">
                             <table class="table">

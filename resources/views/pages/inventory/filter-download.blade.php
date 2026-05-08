@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Laporan Bulanan</title>
+  <title>Download Filter Data</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -19,7 +19,26 @@
   <div>
 
     <h3 class="text-center my-5">
-        Laporan Inventory Bulan {{ DateTime::createFromFormat('!m', $bulan)->format('F') }} {{ $tahun }}
+        Laporan Inventori
+
+        @if(request('tanggal_dari') || request('tanggal_sampai'))
+            <br>
+            <small>
+                @if(request('tanggal_dari') && request('tanggal_sampai'))
+                    {{ \Carbon\Carbon::parse(request('tanggal_dari'))->translatedFormat('d F Y') }}
+                    -
+                    {{ \Carbon\Carbon::parse(request('tanggal_sampai'))->translatedFormat('d F Y') }}
+
+                @elseif(request('tanggal_dari'))
+                    Dari
+                    {{ \Carbon\Carbon::parse(request('tanggal_dari'))->translatedFormat('d F Y') }}
+
+                @elseif(request('tanggal_sampai'))
+                    Sampai
+                    {{ \Carbon\Carbon::parse(request('tanggal_sampai'))->translatedFormat('d F Y') }}
+                @endif
+            </small>
+        @endif
     </h3>
     
 

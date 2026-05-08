@@ -35,6 +35,7 @@ Route::group(['middleware' => 'cekrole:Admin,Staff Gudang,Staff Proyek,Manager']
     Route::resource('/detail-permintaan', DetailPermintaanController::class)->names('detail-permintaan');
 
     Route::get('/laporan', [InventoryController::class, 'laporan']);
+    Route::get('/download-data', [InventoryController::class, 'download'])->name('inventory.download');
     Route::get('/unduh-laporan/{tahun}/{bulan}', [InventoryController::class, 'unduh_laporan']);
 });
 Route::group(['middleware' => 'cekrole:Admin,Manager'], function () {
