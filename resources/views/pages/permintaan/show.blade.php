@@ -88,7 +88,7 @@
                                                     <select name="material" id="material" class="form-select shadow-none @error('material') is-invalid @enderror">
                                                         <option value="">Pilih Material</option>
                                                         @foreach ($materials as $item)
-                                                            <option value="{{ $item->id }}"{{ old('material') == $item->id ? 'selected' : '' }}>{{ $item->nama_produk }}</option>
+                                                            <option value="{{ $item->id }}"{{ old('material') == $item->id ? 'selected' : '' }}>{{ $item->nama_produk }} | stok : {{ $item->stok_produk }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('material')

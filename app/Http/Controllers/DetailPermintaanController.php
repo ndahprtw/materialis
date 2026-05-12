@@ -17,13 +17,21 @@ class DetailPermintaanController extends Controller
             'jumlah' => 'required',
         ]);
 
-        DetailPermintaan::create([
-            'id_permintaan' => $request->id_permintaan,
-            'id_produk' => $request->material,
-            'jumlah_permintaan' => $request->jumlah,
-        ]);
+        $produk = Product::findOrFail($request->material);
 
-        return redirect()->back()->with('success', 'Bahan Material berhasil ditambahkan');
+        if ($request->jumlah > $produk->stok_produk) {
+            return redirect()->back()->with('error', 'Permintaan Ditolak! Jumlah permintaan melebihi stok yang tersedia. Stok ' . $produk->nama_produk . ' saat ini tersisa ' . $produk->stok_produk);
+        } else {
+            DetailPermintaan::create([
+                'id_permintaan' => $request->id_permintaan,
+                'id_produk' => $request->material,
+                'jumlah_permintaan' => $request->jumlah,
+            ]);
+    
+            return redirect()->back()->with('success', 'Bahan Material berhasil ditambahkan');
+        }
+        
+
     }
 
     public function destroy($id)
