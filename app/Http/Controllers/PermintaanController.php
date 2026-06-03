@@ -14,10 +14,17 @@ class PermintaanController extends Controller
     {
         $no = 1;
         $title = 'Permintaan Material';
+
         if (auth()->user()->role == 'Staff Proyek') {
-            $data = Permintaan::where('id_staff_gudang', auth()->user()->id)->orderBy('tanggal_permintaan', 'desc')->get();
+            $data = Permintaan::with(['detailPermintaan'])
+                ->where('id_staff_gudang', auth()->user()->id)
+                ->orderBy('id', 'desc')
+                ->get();
         } else {
-            $data = Permintaan::where('status', "!=", 'dalam pengajuan')->get();
+            $data = Permintaan::with(['detailPermintaan'])
+                ->where('status', '!=', 'dalam pengajuan')
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         return view('pages.permintaan.index', compact('no', 'title', 'data'));

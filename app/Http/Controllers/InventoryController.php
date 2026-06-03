@@ -37,7 +37,7 @@ class InventoryController extends Controller
             $query->where('id_produk', $request->produk);
         }
 
-        $data = $query->get();
+        $data = $query->latest()->get();
 
         return view('pages.inventory.index', compact('no', 'title', 'data', 'produk'));
     }
