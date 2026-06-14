@@ -7,6 +7,6 @@
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      2024 | Designed by <a href="mailto:test@gmail.com" target="_blank">Nazwaliaaaaa</a>
+      2026 | Develope by <a href="mailto:indhpratw@gmail.com" target="_blank">ndhprtw</a>
     </div>
   </footer><!-- End Footer -->
