@@ -37,7 +37,12 @@ class InventoryController extends Controller
             $query->where('id_produk', $request->produk);
         }
 
-        $data = $query->latest()->get();
+        if (auth()->user()->role == 'Staff Gudang') {
+            $data = $query->where('id_karyawan', auth()->user()->id)->latest()->get();
+        } else {
+            $data = $query->latest()->get();
+        }
+        
 
         return view('pages.inventory.index', compact('no', 'title', 'data', 'produk'));
     }
@@ -46,6 +51,13 @@ class InventoryController extends Controller
     {
         $title = 'Inventory';
         $produk = Product::all();
+        return view('pages.inventory.create', compact('title', 'produk'));
+    }
+
+    public function show($id)
+    {
+        $title = 'Inventory';
+        $produk = Product::findOrFail($id);
         return view('pages.inventory.create', compact('title', 'produk'));
     }
 

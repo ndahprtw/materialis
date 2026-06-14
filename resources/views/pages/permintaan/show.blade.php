@@ -22,16 +22,16 @@
                             <table class="table">
                                 <thead>
                                     <th>Tanggal Permintaan</th>
-                                    <th>Staff Gudang</th>
                                     <th>Staff Proyek</th>
+                                    <th>Staff Gudang</th>
                                     <th>Status</th>
                                     <th>Catatan</th>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>{{ \Carbon\Carbon::parse($data->tanggal_permintaan)->translatedFormat('d F Y') }}</td>
-                                        <td>{{ $data->staff_gudang->name }}</td>
                                         <td>{{ $data->staff_proyek->name ?? '-' }}</td>
+                                        <td>{{ $data->staff_gudang->name ?? '-' }}</td>
                                         <td>{{ $data->status }}</td>
                                         <td>{{ $data->catatan ?? '-' }}</td>
                                     </tr>
@@ -68,7 +68,7 @@
                         <div class="d-flex align-items-center justify-content-between m-3">
                             <h5 class="card-title">Total : {{ $detail_data->count() }}  Bahan Material</h5>
 
-                            @if (auth()->user()->role == 'Staff Proyek')
+                            @if (auth()->user()->role == 'Staff Proyek' && $data->status == 'dalam pengajuan')
                                 {{-- tambah data baru --}}
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-data"> <i class="bi bi-plus-square"></i> Data Baru </button>
                                 <div class="modal fade" id="tambah-data" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -88,7 +88,7 @@
                                                     <select name="material" id="material" class="form-select shadow-none @error('material') is-invalid @enderror">
                                                         <option value="">Pilih Material</option>
                                                         @foreach ($materials as $item)
-                                                            <option value="{{ $item->id }}"{{ old('material') == $item->id ? 'selected' : '' }}>{{ $item->nama_produk }} | stok : {{ $item->stok_produk }}</option>
+                                                            <option value="{{ $item->id }}"{{ old('material') == $item->id ? 'selected' : '' }}>{{ $item->nama_produk }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('material')
@@ -171,6 +171,7 @@
                                                                         <form action="{{ route('detail-permintaan.update', $item->id) }}" method="POST" style="display: inline;">
                                                                             @method('PUT')
                                                                             @csrf
+                                                                            <input type="hidden" name="staff_proyek" value="{{ $data->staff_proyek->id }}">
                                                                             <input type="hidden" name="status" value="stok tersedia">
                                                                             <input type="submit" value="Setujui" class="btn btn-success shadow-none">
                                                                         </form>
@@ -204,7 +205,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <a href="{{ route('inventory.create') }}" class="btn btn-primary"> Restock </a>
+                                                        <a href="{{ route('inventory.show', $item->produk->id) }}" class="btn btn-primary"> Restock </a>
                                                     @endif
                                                 @else
                                                     @if ($item->status == 'stok tersedia')

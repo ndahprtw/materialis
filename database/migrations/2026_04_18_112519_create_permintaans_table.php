@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('permintaans', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_permintaan');
-            $table->foreignId('id_staff_gudang')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('id_staff_proyek')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_staff_proyek')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_staff_gudang')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->text('catatan')->nullable();
              $table->enum('status', ['dalam pengajuan', 'diajukan', 'diproses', 'selesai']);
             $table->timestamps();

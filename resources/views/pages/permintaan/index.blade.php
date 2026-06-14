@@ -156,7 +156,9 @@
                                                     </div>
                                                 @else
                                                 <p class="text-center">
-                                                    @if ($item->status == 'diproses')
+                                                    @if ($item->status == 'diajukan')
+                                                        <span class="badge bg-secondary"> {{ $item->status }} </span>
+                                                    @elseif ($item->status == 'diproses')
                                                         <span class="badge bg-primary"> {{ $item->status }} </span>
                                                     @elseif ($item->status == 'selesai')
                                                         <a href="{{ route('permintaan.show', $item->id) }}" class="btn btn-success"><i class="bi bi-eye"></i></a>
@@ -169,80 +171,49 @@
                                 @endforeach
                             </div>
                         @elseif (auth()->user()->role == 'Staff Gudang')
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <th>No.</th>
-                                        <th>Tanggal Permintaan</th>
-                                        <th>Staff Gudang</th>
-                                        <th>Staff Proyek</th>
-                                        <th>Status</th>
-                                        <th>Total jenis material</th>
-                                        <th>Catatan</th>
-                                        <th></th>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $item)
-                                            <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($item->tanggal_permintaan)->translatedFormat('d F Y') }}</td>
-                                                <td>{{ $item->staff_gudang->name }}</td>
-                                                <td>{{ $item->staff_proyek->name ?? '-' }}</td>
-                                                <td>{{ $item->status }}</td>
-                                                <td>{{ $item->detailPermintaan->whereNotNull('status')->count() }} dari {{ $item->detailPermintaan->count() }} telah diproses</td>
-                                                <td>{{ $item->catatan ?? '-' }}</td>
-                                                <td>
-                                                    @if ($item->status == 'diajukan')
-                                                        {{-- proses data --}}
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#proses-data-{{ $item->id }}"> <i class="bi bi-check-circle"></i> </button>
-                                                        <div class="modal fade" id="proses-data-{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <form action="{{ route('permintaan.update', $item->id) }}" method="POST">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title">Konfirmasi Pemrosesan Data</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <input type="hidden" name="status" value="diproses">
-                                                                            <p class="text-center">
-                                                                                <b>{{ auth()->user()->name }}</b>. Anda akan memproses data permintaan material ini.
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
-                                                                            <button type="submit" class="btn btn-success text-white shadow-none">Ya</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    @elseif ($item->status == 'diproses')
-
-                                                        @php
-                                                            $diproses = $item->detailPermintaan->whereNotNull('status')->count();
-                                                            $total = $item->detailPermintaan->count();
-                                                        @endphp
-
-                                                        @if ($diproses == $total && $total > 0)
-                                                            {{-- selesai data --}}
-                                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#selesai-data-{{ $item->id }}"> <i class="bi bi-check"></i> </button>
-                                                            <div class="modal fade" id="selesai-data-{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            @if ($data->count() == 0)
+                               <p class="text-danger text-center my-3"> Belum ada permintaan material </p> 
+                            @else
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <th>No.</th>
+                                            <th>Tanggal Permintaan</th>
+                                            <th>Staff Proyek</th>
+                                            <th>Staff Gudang</th>
+                                            <th>Status</th>
+                                            <th>Total jenis material</th>
+                                            <th>Catatan</th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data as $item)
+                                                <tr>
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_permintaan)->translatedFormat('d F Y') }}</td>
+                                                    <td>{{ $item->staff_proyek->name ?? '-' }}</td>
+                                                    <td>{{ $item->staff_gudang->name ?? '-' }}</td>
+                                                    <td>{{ $item->status }}</td>
+                                                    <td>{{ $item->detailPermintaan->whereNotNull('status')->count() }} dari {{ $item->detailPermintaan->count() }} telah diproses</td>
+                                                    <td>{{ $item->catatan ?? '-' }}</td>
+                                                    <td>
+                                                        @if ($item->status == 'diajukan')
+                                                            {{-- proses data --}}
+                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#proses-data-{{ $item->id }}"> <i class="bi bi-check-circle"></i> </button>
+                                                            <div class="modal fade" id="proses-data-{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <form action="{{ route('permintaan.update', $item->id) }}" method="POST">
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
-                                                                                <h5 class="modal-title">Konfirmasi Selesai Proses Permintaan Data</h5>
+                                                                                <h5 class="modal-title">Konfirmasi Pemrosesan Data</h5>
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                             </div>
                                                                             <div class="modal-body">
-                                                                                <input type="hidden" name="status" value="selesai">
+                                                                                <input type="hidden" name="status" value="diproses">
                                                                                 <p class="text-center">
-                                                                                    {{ $item->detailPermintaan->whereNotNull('status')->count() }} dari {{ $item->detailPermintaan->count() }} telah selesai diproses.
+                                                                                    <b>{{ auth()->user()->name }}</b>. Anda akan memproses data permintaan material ini.
                                                                                 </p>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -252,21 +223,56 @@
                                                                         </div>
                                                                     </form>
                                                                 </div>
-                                                            </div>                                             
-                                                        @else
-                                                            <a href="{{ route('permintaan.show', $item->id) }}" class="btn btn-primary shadow-none">
-                                                                <i class="bi bi-eye"></i> 
-                                                            </a>
+                                                            </div>
+                                                        @elseif ($item->status == 'diproses')
+
+                                                            @php
+                                                                $diproses = $item->detailPermintaan->whereNotNull('status')->count();
+                                                                $total = $item->detailPermintaan->count();
+                                                            @endphp
+
+                                                            @if ($diproses == $total && $total > 0)
+                                                                {{-- selesai data --}}
+                                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#selesai-data-{{ $item->id }}"> <i class="bi bi-check"></i> </button>
+                                                                <div class="modal fade" id="selesai-data-{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <form action="{{ route('permintaan.update', $item->id) }}" method="POST">
+                                                                            @csrf
+                                                                            @method('PUT')
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title">Konfirmasi Selesai Proses Permintaan Data</h5>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <input type="hidden" name="status" value="selesai">
+                                                                                    <p class="text-center">
+                                                                                        {{ $item->detailPermintaan->whereNotNull('status')->count() }} dari {{ $item->detailPermintaan->count() }} telah selesai diproses.
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
+                                                                                    <button type="submit" class="btn btn-success text-white shadow-none">Ya</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>                                             
+                                                            @else
+                                                                <a href="{{ route('permintaan.show', $item->id) }}" class="btn btn-primary shadow-none">
+                                                                    <i class="bi bi-eye"></i> 
+                                                                </a>
+                                                            @endif
+                                                        @else 
+                                                            <span class="badge bg-success">selesai</span>
                                                         @endif
-                                                    @else 
-                                                        <span class="badge bg-success">selesai</span>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>

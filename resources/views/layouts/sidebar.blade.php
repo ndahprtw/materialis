@@ -21,7 +21,7 @@
       </li><!-- End Nav -->
     @endif
     
-    @if (auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Manager')
+    @if (auth()->user()->role == 'Admin' || auth()->user()->role == 'Manager')
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/data-sales') }}" class="nav-link {{ Request::is('data-sales*') ? '' : 'collapsed' }}">
@@ -40,13 +40,13 @@
      
     @endif
 
-    @if (auth()->user()->role == 'Staff Proyek' || auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Manager')
+    @if (auth()->user()->role == 'Admin' || auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Manager')
 
         <!-- Nav -->
         <li class="nav-item">
           <a href="{{ url('/inventory') }}" class="nav-link {{ Request::is('inventory*') || Request::is('laporan') ? '' : 'collapsed' }}">
             <i class="bi bi-arrow-left-right"></i>
-            <span> Inventory </span>
+            <span> Inventori </span>
           </a>
         </li><!-- End Nav -->
 

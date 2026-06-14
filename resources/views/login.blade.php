@@ -6,6 +6,9 @@
 
     <!-- Favicon -->
     <link href="{{ asset('assets/img/logo.jpg') }}" rel="icon">
+      <!-- Favicons -->
+    <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="apple-touch-icon">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
@@ -16,7 +19,7 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <title>Login Sistem Inventory</title>
+    <title>Login Sistem Materialis</title>
 
     <style>
         body {
@@ -125,7 +128,8 @@
 
 <div class="login-box">
     <img src="{{ asset('assets/img/logo.png') }}" alt="">
-    <h3>Sistem Inventory Material</h3>
+    <h3 class="m-0">MATERIALIS</h3>
+    <p>(Material Information System)</p>
 
     @if(session('wrong'))
         <div class="alert alert-danger">

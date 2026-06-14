@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_produk' => 'required|string',
+            'nama_produk' => 'required|string|unique:products,nama_produk',
             'nama_sales' => 'required',
             'harga_produk' => 'required|numeric',
             'stok_produk' => 'required|integer',

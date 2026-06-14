@@ -89,7 +89,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                             <div class="m-2">
-                                                                <label for="nama_produk" class="form-label">Nama Product</label>
+                                                                <label for="nama_produk" class="form-label">Material</label>
                                                                 <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror shadow-none" id="nama_produk" value="{{ $data->nama_produk }}">
                                                                 @error('nama_produk') 
                                                                 <div class="invalid-feedback">
@@ -112,7 +112,7 @@
                                                                 @enderror
                                                             </div>
                                                             <div class="m-2">
-                                                                <label for="harga_produk" class="form-label">Harga Product</label>
+                                                                <label for="harga_produk" class="form-label">Harga Material</label>
                                                                 <input type="text" name="harga_produk" class="form-control @error('harga_produk') is-invalid @enderror shadow-none" id="harga_produk" value="{{ $data->harga_produk }}">
                                                                 @error('harga_produk') 
                                                                 <div class="invalid-feedback">
@@ -121,13 +121,8 @@
                                                                 @enderror
                                                             </div>
                                                             <div class="m-2">
-                                                                <label for="stok_produk" class="form-label">Stok Product</label>
-                                                                <input type="text" name="stok_produk" class="form-control @error('stok_produk') is-invalid @enderror shadow-none" id="stok_produk" value="{{ $data->stok_produk }}">
-                                                                @error('stok_produk') 
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div> 
-                                                                @enderror
+                                                                <label for="stok_produk" class="form-label">Stok Material</label>
+                                                                <input type="text" name="stok_produk" class="form-control @error('stok_produk') is-invalid @enderror shadow-none" id="stok_produk" value="{{ $data->stok_produk }}" disabled>
                                                             </div>
                                                             </div>
                                                             <div class="modal-footer">
@@ -145,11 +140,11 @@
                                                         <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title"> Hapus Informasi Produk </h5>
+                                                                <h5 class="modal-title"> Hapus Informasi Material </h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                                 <div class="modal-body text-center">
-                                                                    <p style="color: black">Apakah anda yakin untuk menghapus produk {{ $data->nama_produk }}?</p>
+                                                                    <p style="color: black">Apakah anda yakin untuk menghapus material {{ $data->nama_produk }}?</p>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Tidak</button>
@@ -190,7 +185,7 @@
             </div>
             <div class="modal-body">
                 <div class="m-2">
-                    <label for="nama_produk" class="form-label">Nama Material</label>
+                    <label for="nama_produk" class="form-label">Material</label>
                     <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror shadow-none" id="nama_produk" value="{{ old('nama_produk') }}">
                     @error('nama_produk') 
                     <div class="invalid-feedback">

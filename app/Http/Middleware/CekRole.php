@@ -22,6 +22,6 @@ class CekRole
             return $next($request);
         }
         
-        return redirect('/')->with('wrong', 'Harap Login Terlebih Dahulu');
+        return redirect('/')->with('wrong', 'Akses Ditolak!');
     }
 }

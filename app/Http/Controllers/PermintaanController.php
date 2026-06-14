@@ -17,7 +17,7 @@ class PermintaanController extends Controller
 
         if (auth()->user()->role == 'Staff Proyek') {
             $data = Permintaan::with(['detailPermintaan'])
-                ->where('id_staff_gudang', auth()->user()->id)
+                ->where('id_staff_proyek', auth()->user()->id)
                 ->orderBy('id', 'desc')
                 ->get();
         } else {
@@ -34,8 +34,8 @@ class PermintaanController extends Controller
     {
         Permintaan::create([
             'tanggal_permintaan' => now(),
-            'id_staff_gudang' => $request->id_staff_gudang,
-            'id_staff_proyek' => null,
+            'id_staff_proyek' => auth()->user()->id,
+            'id_staff_gudang' => null,
             'catatan' => null,
             'status' => 'dalam pengajuan',
         ]);
@@ -57,7 +57,7 @@ class PermintaanController extends Controller
         } elseif ($request->status == 'diproses') {
             $data->update([
                 'status'  => 'diproses',
-                'id_staff_proyek' => auth()->user()->id,
+                'id_staff_gudang' => auth()->user()->id,
             ]);
 
             return redirect()->back()->with('success', 'Permintaan pengajuan material berhasil dilakukan.');

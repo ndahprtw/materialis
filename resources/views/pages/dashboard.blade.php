@@ -14,25 +14,22 @@
     <section class="section dashboard">
 
     <div class="row">
-      <div class="col-lg-12">
-          <div class="row justify-content-center">
-              <!-- Card -->
-              <div class="col-lg-8">
+      <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body row justify-content-center text-center m-2">
+              <img src="{{ asset('assets/img/logo.png') }}" alt="logo perusahaan" class="img-fluid w-50 my-3 rounded-5 ">
+              <h5> Selamat Datang, <b>{{ auth()->user()->name }}</b> </h5>
+              <h3 class="fw-bold"> MATERIALIS </h3>
+              <p>(Material Information System)</p>
+            </div>
+        </div>
+      </div>
 
-                  <div class="card">
-                      <div class="card-body row justify-content-center text-center m-2">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="logo perusahaan" class="img-fluid w-50">
-                        <h3 class="my-2 fw-bold"> SISTEM INFORMASI INVENTORI MATERIAL </h3>
-                      </div>
-                  </div>
-
-              </div><!-- End Card -->
-          </div>
-
+      <div class="col-lg-4">
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-12">
               <div class="card info-card sales-card">
 
                 <div class="card-body">
@@ -52,7 +49,7 @@
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-12">
               <div class="card info-card revenue-card">
 
                 <div class="card-body">
@@ -72,7 +69,7 @@
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <div class="col-12">
 
               <div class="card info-card customers-card">
 

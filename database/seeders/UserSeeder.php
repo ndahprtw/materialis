@@ -16,8 +16,8 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Nazwa',
-                'email' => 'Nazwa@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('123456'),
                 'role' => 'Admin',
                 'profile' => 'admin.jpg',
@@ -25,8 +25,8 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Eka',
-                'email' => 'eka@gmail.com',
+                'name' => 'Staff Proyek',
+                'email' => 'staffproyek@gmail.com',
                 'password' => Hash::make('123456'),
                 'role' => 'Staff Proyek',
                 'profile' => 'staff proyek.jpg',
@@ -34,23 +34,23 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Haikal',
-                'email' => 'haikal@gmail.com',
+                'name' => 'Staff Gudang',
+                'email' => 'staffgudang@gmail.com',
                 'password' => Hash::make('123456'),
                 'role' => 'Staff Gudang',
                 'profile' => 'staff gudang.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'name' => 'Promono',
-                'email' => 'promono@gmail.com',
-                'password' => Hash::make('123456'),
-                'role' => 'Manager',
-                'profile' => 'manager.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            // [
+            //     'name' => 'Manager',
+            //     'email' => 'manager@gmail.com',
+            //     'password' => Hash::make('123456'),
+            //     'role' => 'Manager',
+            //     'profile' => 'manager.jpg',
+            //     'created_at' => now(),
+            //     'updated_at' => now(),
+            // ],
         ]);
     }
 }
