@@ -9,11 +9,10 @@
     <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
     <link href="{{ asset('assets/img/logo.png') }}" rel="logo">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="p-3">
 
     {{-- Kop Surat --}}
     <div style="margin-bottom:20px;">
@@ -25,18 +24,16 @@
 
                 <td width="70%" align="center">
                     <h4 style="margin:0;">
-                        PT KRAKATAU PERBENGKELAN DAN PERAWATAN
+                        MATERIALIS
                     </h4>
 
                     <p style="margin:0;">
-                        Jl. Raya Anyer Kav. A-01 Kawasan Industri Krakatau<br>
-                        Cilegon - Banten<br>
-                        Telp. (0254) 396464
+                        Kraton Bangkalan<br>
+                        Telp. (0254) 345678
                     </p>
                 </td>
 
                 <td width="15%" align="right">
-                    {{-- Logo sertifikasi jika ada --}}
                 </td>
             </tr>
         </table>
@@ -51,7 +48,6 @@
         {{ $tahun }}
     </h3>
 
-    {{-- TABEL ASLI (TIDAK DIUBAH) --}}
     <div style="margin-top: 35px; display: flex; justify-content:center; align-items:center;">
         <table class="table" style="font-size: 10px">
             <thead>
