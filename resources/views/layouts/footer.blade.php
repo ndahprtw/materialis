@@ -1,6 +1,6 @@
 <footer id="footer" class="footer">
     <div class="copyright">
-        <b> Inventory Material </b> 
+        <b> MATERIALIS (Material Information System) </b> 
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
